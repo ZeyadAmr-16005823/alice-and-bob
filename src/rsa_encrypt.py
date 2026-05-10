@@ -19,8 +19,9 @@ def generate_rsa_keypair(bits: int = 2048):
     Returns:
         (private_key, public_key) as RsaKey objects
     """
-    # TODO: Generate RSA key pair using Crypto.PublicKey.RSA
-    pass
+    private_key = RSA.generate(bits)
+    public_key  = private_key.publickey()
+    return private_key, public_key
 
 
 def sign(private_key, data: bytes) -> bytes:
@@ -34,5 +35,6 @@ def sign(private_key, data: bytes) -> bytes:
     Returns:
         signature as bytes
     """
-    # TODO: Hash the data with SHA256, then sign with pkcs1_15
-    pass
+    hash_obj  = SHA256.new(data)
+    signature = pkcs1_15.new(private_key).sign(hash_obj)
+    return signature
