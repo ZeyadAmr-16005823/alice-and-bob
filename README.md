@@ -12,8 +12,6 @@ Modelled after real-world protocols like HTTPS — built as part of a Network Se
 ![VSCode](https://img.shields.io/badge/VSCode-Editor-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)
 ![Cryptography](https://img.shields.io/badge/Crypto-RSA%20%2B%20DH%20%2B%20AES-6A0DAD?style=for-the-badge)
 <<<<<<< HEAD
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow?style=for-the-badge)
-
 =======
 >>>>>>> 795448a62a1ac01cd6391b2b92324b3b015e109b
 </div>

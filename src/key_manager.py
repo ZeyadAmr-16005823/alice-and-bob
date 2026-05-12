@@ -18,8 +18,10 @@ def save_private_key(private_key, filename: str):
         private_key : RsaKey — the RSA private key to save
         filename    : str    — output filename (e.g. 'alice_private.pem')
     """
-    # TODO: Export private key as PEM and write to keys/ directory
-    pass
+    os.makedirs(KEYS_DIR, exist_ok=True)
+    path = os.path.join(KEYS_DIR, filename)
+    with open(path, "wb") as f:
+        f.write(private_key.export_key("PEM"))
 
 
 def save_public_key(public_key, filename: str):
@@ -30,8 +32,10 @@ def save_public_key(public_key, filename: str):
         public_key : RsaKey — the RSA public key to save
         filename   : str    — output filename (e.g. 'alice_public.pem')
     """
-    # TODO: Export public key as PEM and write to keys/ directory
-    pass
+    os.makedirs(KEYS_DIR, exist_ok=True)
+    path = os.path.join(KEYS_DIR, filename)
+    with open(path, "wb") as f:
+        f.write(public_key.export_key("PEM"))
 
 
 def load_private_key(filename: str):
@@ -44,8 +48,9 @@ def load_private_key(filename: str):
     Returns:
         RsaKey object
     """
-    # TODO: Read PEM file and import with RSA.import_key()
-    pass
+    path = os.path.join(KEYS_DIR, filename)
+    with open(path, "rb") as f:
+        return RSA.import_key(f.read())
 
 
 def load_public_key(filename: str):
@@ -58,8 +63,9 @@ def load_public_key(filename: str):
     Returns:
         RsaKey object
     """
-    # TODO: Read PEM file and import with RSA.import_key()
-    pass
+    path = os.path.join(KEYS_DIR, filename)
+    with open(path, "rb") as f:
+        return RSA.import_key(f.read())
 
 
 def setup_keys(generate_keypair_fn):
@@ -72,8 +78,14 @@ def setup_keys(generate_keypair_fn):
     Returns:
         (alice_private, alice_public, bob_private, bob_public)
     """
-    # TODO: Create keys/ directory if it doesn't exist
-    # Generate keypairs for Alice and Bob
-    # Save all four keys to the keys/ directory
-    # Return all four keys
-    pass
+    os.makedirs(KEYS_DIR, exist_ok=True)
+
+    alice_private, alice_public = generate_keypair_fn()
+    bob_private,   bob_public   = generate_keypair_fn()
+
+    save_private_key(alice_private, "alice_private.pem")
+    save_public_key (alice_public,  "alice_public.pem")
+    save_private_key(bob_private,   "bob_private.pem")
+    save_public_key (bob_public,    "bob_public.pem")
+
+    return alice_private, alice_public, bob_private, bob_public

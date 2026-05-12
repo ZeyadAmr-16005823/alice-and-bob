@@ -21,9 +21,12 @@ def verify(public_key, data: bytes, signature: bytes) -> bool:
     Returns:
         True if valid, False otherwise
     """
-    # TODO: Hash data with SHA256, verify with pkcs1_15
-    # Catch ValueError if verification fails and return False
-    pass
+    try:
+        hash_obj = SHA256.new(data)
+        pkcs1_15.new(public_key).verify(hash_obj, signature)
+        return True
+    except (ValueError, TypeError):
+        return False
 
 
 def aes_decrypt(key: bytes, ciphertext: bytes, nonce: bytes, tag: bytes) -> bytes:
@@ -39,6 +42,6 @@ def aes_decrypt(key: bytes, ciphertext: bytes, nonce: bytes, tag: bytes) -> byte
     Returns:
         plaintext as bytes
     """
-    # TODO: Use AES.new() in MODE_EAX with the provided nonce
-    # Decrypt and verify the tag — raise ValueError if tampered
-    pass
+    cipher    = AES.new(key, AES.MODE_EAX, nonce=nonce)
+    plaintext = cipher.decrypt_and_verify(ciphertext, tag)
+    return plaintext
